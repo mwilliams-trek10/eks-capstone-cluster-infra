@@ -1,0 +1,2315 @@
+Description: Blueprints tracking (qs-1s1r465k6)
+Resources:
+  ekscapstoneclusterinfrapipelinePipelineArtifactsBucketA4EE0DF3:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: aws:kms
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/ArtifactsBucket/Resource
+  ekscapstoneclusterinfrapipelinePipelineArtifactsBucketPolicy6420CD93:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket:
+        Ref: ekscapstoneclusterinfrapipelinePipelineArtifactsBucketA4EE0DF3
+      PolicyDocument:
+        Statement:
+          - Action: s3:*
+            Condition:
+              Bool:
+                aws:SecureTransport: "false"
+            Effect: Deny
+            Principal:
+              AWS: "*"
+            Resource:
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineArtifactsBucketA4EE0DF3
+                  - Arn
+              - Fn::Join:
+                  - ""
+                  - - Fn::GetAtt:
+                        - ekscapstoneclusterinfrapipelinePipelineArtifactsBucketA4EE0DF3
+                        - Arn
+                    - /*
+          - Action:
+              - s3:GetBucket*
+              - s3:GetObject*
+              - s3:List*
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :role/cdk-hnb659fds-deploy-role-
+                    - Ref: AWS::AccountId
+                    - "-"
+                    - Ref: AWS::Region
+            Resource:
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineArtifactsBucketA4EE0DF3
+                  - Arn
+              - Fn::Join:
+                  - ""
+                  - - Fn::GetAtt:
+                        - ekscapstoneclusterinfrapipelinePipelineArtifactsBucketA4EE0DF3
+                        - Arn
+                    - /*
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/ArtifactsBucket/Policy/Resource
+  ekscapstoneclusterinfrapipelinePipelineRoleA9121227:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: codepipeline.amazonaws.com
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Role/Resource
+  ekscapstoneclusterinfrapipelinePipelineRoleDefaultPolicy996AC8A8:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - s3:Abort*
+              - s3:DeleteObject*
+              - s3:GetBucket*
+              - s3:GetObject*
+              - s3:List*
+              - s3:PutObject
+              - s3:PutObjectLegalHold
+              - s3:PutObjectRetention
+              - s3:PutObjectTagging
+              - s3:PutObjectVersionTagging
+            Effect: Allow
+            Resource:
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineArtifactsBucketA4EE0DF3
+                  - Arn
+              - Fn::Join:
+                  - ""
+                  - - Fn::GetAtt:
+                        - ekscapstoneclusterinfrapipelinePipelineArtifactsBucketA4EE0DF3
+                        - Arn
+                    - /*
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Resource:
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset10CodePipelineActionRoleD268E245
+                  - Arn
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset11CodePipelineActionRole88FF66C2
+                  - Arn
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset12CodePipelineActionRoleF0926DB9
+                  - Arn
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset13CodePipelineActionRoleEEE98D6F
+                  - Arn
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset14CodePipelineActionRole68DF1F6D
+                  - Arn
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset1CodePipelineActionRole21CA49AC
+                  - Arn
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset2CodePipelineActionRole227528AC
+                  - Arn
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset3CodePipelineActionRoleA0C510E5
+                  - Arn
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset4CodePipelineActionRole3A79608A
+                  - Arn
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset5CodePipelineActionRoleE37051A8
+                  - Arn
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset6CodePipelineActionRoleA7244923
+                  - Arn
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset7CodePipelineActionRoleED0F5C54
+                  - Arn
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset8CodePipelineActionRoleE67633CD
+                  - Arn
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset9CodePipelineActionRole956813A9
+                  - Arn
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineBuildekscapstoneclusterinfrapipelinesynthCodePipelineActionRoleEC2CCB31
+                  - Arn
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineUpdatePipelineSelfMutateCodePipelineActionRoleAE5EDD6A
+                  - Arn
+              - Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :role/cdk-hnb659fds-deploy-role-
+                    - Ref: AWS::AccountId
+                    - "-"
+                    - Ref: AWS::Region
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineRoleDefaultPolicy996AC8A8
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineRoleA9121227
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Role/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelinePipeline0C52836C:
+    Type: AWS::CodePipeline::Pipeline
+    Properties:
+      RoleArn:
+        Fn::GetAtt:
+          - ekscapstoneclusterinfrapipelinePipelineRoleA9121227
+          - Arn
+      Stages:
+        - Actions:
+            - ActionTypeId:
+                Category: Source
+                Owner: ThirdParty
+                Provider: GitHub
+                Version: "1"
+              Configuration:
+                Owner: mwilliams-trek10
+                Repo: eks-capstone-cluster-infra
+                Branch: main
+                OAuthToken: "{{resolve:secretsmanager:github-token:SecretString:::}}"
+                PollForSourceChanges: false
+              Name: mwilliams-trek10_eks-capstone-cluster-infra
+              OutputArtifacts:
+                - Name: mwilliams_trek10_eks_capstone_cluster_infra_Source
+              RunOrder: 1
+          Name: Source
+        - Actions:
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName:
+                  Ref: ekscapstoneclusterinfrapipelinePipelineBuildekscapstoneclusterinfrapipelinesynthCdkBuildProject60D26734
+                EnvironmentVariables: '[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"741e84f467ec081eb9e8501c3dece491bf092613ee53abf7ee579ea7bdf840ca"}]'
+              InputArtifacts:
+                - Name: mwilliams_trek10_eks_capstone_cluster_infra_Source
+              Name: eks-capstone-cluster-infra-pipeline-synth
+              OutputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              RoleArn:
+                Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineBuildekscapstoneclusterinfrapipelinesynthCodePipelineActionRoleEC2CCB31
+                  - Arn
+              RunOrder: 1
+          Name: Build
+        - Actions:
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName:
+                  Ref: ekscapstoneclusterinfrapipelineUpdatePipelineSelfMutation4061FA22
+                EnvironmentVariables: '[{"name":"_PROJECT_CONFIG_HASH","type":"PLAINTEXT","value":"2840329c14ad37f8ae86343d47109ea3d5a5a4d5a21c9a19633976132e877cf5"}]'
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: SelfMutate
+              RoleArn:
+                Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineUpdatePipelineSelfMutateCodePipelineActionRoleAE5EDD6A
+                  - Arn
+              RunOrder: 1
+          Name: UpdatePipeline
+        - Actions:
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName:
+                  Ref: ekscapstoneclusterinfrapipelineAssetsFileAsset12A9954B4
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: FileAsset1
+              RoleArn:
+                Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset1CodePipelineActionRole21CA49AC
+                  - Arn
+              RunOrder: 1
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName:
+                  Ref: ekscapstoneclusterinfrapipelineAssetsFileAsset106B788073
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: FileAsset10
+              RoleArn:
+                Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset10CodePipelineActionRoleD268E245
+                  - Arn
+              RunOrder: 1
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName:
+                  Ref: ekscapstoneclusterinfrapipelineAssetsFileAsset11DFD14FFC
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: FileAsset11
+              RoleArn:
+                Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset11CodePipelineActionRole88FF66C2
+                  - Arn
+              RunOrder: 1
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName:
+                  Ref: ekscapstoneclusterinfrapipelineAssetsFileAsset1225EADC6E
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: FileAsset12
+              RoleArn:
+                Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset12CodePipelineActionRoleF0926DB9
+                  - Arn
+              RunOrder: 1
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName:
+                  Ref: ekscapstoneclusterinfrapipelineAssetsFileAsset13D028DA80
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: FileAsset13
+              RoleArn:
+                Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset13CodePipelineActionRoleEEE98D6F
+                  - Arn
+              RunOrder: 1
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName:
+                  Ref: ekscapstoneclusterinfrapipelineAssetsFileAsset1485B64133
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: FileAsset14
+              RoleArn:
+                Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset14CodePipelineActionRole68DF1F6D
+                  - Arn
+              RunOrder: 1
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName:
+                  Ref: ekscapstoneclusterinfrapipelineAssetsFileAsset25C9C9871
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: FileAsset2
+              RoleArn:
+                Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset2CodePipelineActionRole227528AC
+                  - Arn
+              RunOrder: 1
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName:
+                  Ref: ekscapstoneclusterinfrapipelineAssetsFileAsset38873B944
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: FileAsset3
+              RoleArn:
+                Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset3CodePipelineActionRoleA0C510E5
+                  - Arn
+              RunOrder: 1
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName:
+                  Ref: ekscapstoneclusterinfrapipelineAssetsFileAsset4745E5335
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: FileAsset4
+              RoleArn:
+                Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset4CodePipelineActionRole3A79608A
+                  - Arn
+              RunOrder: 1
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName:
+                  Ref: ekscapstoneclusterinfrapipelineAssetsFileAsset5213E04CA
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: FileAsset5
+              RoleArn:
+                Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset5CodePipelineActionRoleE37051A8
+                  - Arn
+              RunOrder: 1
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName:
+                  Ref: ekscapstoneclusterinfrapipelineAssetsFileAsset60E4AEB9D
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: FileAsset6
+              RoleArn:
+                Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset6CodePipelineActionRoleA7244923
+                  - Arn
+              RunOrder: 1
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName:
+                  Ref: ekscapstoneclusterinfrapipelineAssetsFileAsset77FAE7EDE
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: FileAsset7
+              RoleArn:
+                Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset7CodePipelineActionRoleED0F5C54
+                  - Arn
+              RunOrder: 1
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName:
+                  Ref: ekscapstoneclusterinfrapipelineAssetsFileAsset884F12D27
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: FileAsset8
+              RoleArn:
+                Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset8CodePipelineActionRoleE67633CD
+                  - Arn
+              RunOrder: 1
+            - ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: "1"
+              Configuration:
+                ProjectName:
+                  Ref: ekscapstoneclusterinfrapipelineAssetsFileAsset9681D7D83
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: FileAsset9
+              RoleArn:
+                Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset9CodePipelineActionRole956813A9
+                  - Arn
+              RunOrder: 1
+          Name: Assets
+        - Actions:
+            - ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: CloudFormation
+                Version: "1"
+              Configuration:
+                StackName: dev-dev-blueprint
+                Capabilities: CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
+                RoleArn:
+                  Fn::Join:
+                    - ""
+                    - - "arn:"
+                      - Ref: AWS::Partition
+                      - ":iam::"
+                      - Ref: AWS::AccountId
+                      - :role/cdk-hnb659fds-cfn-exec-role-
+                      - Ref: AWS::AccountId
+                      - "-"
+                      - Ref: AWS::Region
+                ActionMode: CHANGE_SET_REPLACE
+                ChangeSetName: PipelineChange
+                TemplatePath: eks_capstone_cluster_infra_pipeline_synth_Output::assembly-eks-capstone-cluster-infra-pipeline-blueprint-dev/ekscapstoneclusterinfrapipelineblueprintdevdevblueprint708BF684.template.json
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: Prepare
+              RoleArn:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :role/cdk-hnb659fds-deploy-role-
+                    - Ref: AWS::AccountId
+                    - "-"
+                    - Ref: AWS::Region
+              RunOrder: 1
+            - ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: CloudFormation
+                Version: "1"
+              Configuration:
+                StackName: dev-dev-blueprint
+                ActionMode: CHANGE_SET_EXECUTE
+                ChangeSetName: PipelineChange
+              Name: Deploy
+              RoleArn:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :role/cdk-hnb659fds-deploy-role-
+                    - Ref: AWS::AccountId
+                    - "-"
+                    - Ref: AWS::Region
+              RunOrder: 2
+          Name: dev
+        - Actions:
+            - ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: CloudFormation
+                Version: "1"
+              Configuration:
+                StackName: qa-qa-blueprint
+                Capabilities: CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
+                RoleArn:
+                  Fn::Join:
+                    - ""
+                    - - "arn:"
+                      - Ref: AWS::Partition
+                      - ":iam::"
+                      - Ref: AWS::AccountId
+                      - :role/cdk-hnb659fds-cfn-exec-role-
+                      - Ref: AWS::AccountId
+                      - "-"
+                      - Ref: AWS::Region
+                ActionMode: CHANGE_SET_REPLACE
+                ChangeSetName: PipelineChange
+                TemplatePath: eks_capstone_cluster_infra_pipeline_synth_Output::assembly-eks-capstone-cluster-infra-pipeline-blueprint-qa/ekscapstoneclusterinfrapipelineblueprintqaqablueprint4CAE25A0.template.json
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: Prepare
+              RoleArn:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :role/cdk-hnb659fds-deploy-role-
+                    - Ref: AWS::AccountId
+                    - "-"
+                    - Ref: AWS::Region
+              RunOrder: 1
+            - ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: CloudFormation
+                Version: "1"
+              Configuration:
+                StackName: qa-qa-blueprint
+                ActionMode: CHANGE_SET_EXECUTE
+                ChangeSetName: PipelineChange
+              Name: Deploy
+              RoleArn:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :role/cdk-hnb659fds-deploy-role-
+                    - Ref: AWS::AccountId
+                    - "-"
+                    - Ref: AWS::Region
+              RunOrder: 2
+          Name: qa
+        - Actions:
+            - ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: CloudFormation
+                Version: "1"
+              Configuration:
+                StackName: prod-prod-blueprint
+                Capabilities: CAPABILITY_NAMED_IAM,CAPABILITY_AUTO_EXPAND
+                RoleArn:
+                  Fn::Join:
+                    - ""
+                    - - "arn:"
+                      - Ref: AWS::Partition
+                      - ":iam::"
+                      - Ref: AWS::AccountId
+                      - :role/cdk-hnb659fds-cfn-exec-role-
+                      - Ref: AWS::AccountId
+                      - "-"
+                      - Ref: AWS::Region
+                ActionMode: CHANGE_SET_REPLACE
+                ChangeSetName: PipelineChange
+                TemplatePath: eks_capstone_cluster_infra_pipeline_synth_Output::assembly-eks-capstone-cluster-infra-pipeline-blueprint-prod/ekscapstoneclusterinfrapipelineblueprintprodprodblueprint98B8F7B5.template.json
+              InputArtifacts:
+                - Name: eks_capstone_cluster_infra_pipeline_synth_Output
+              Name: Prepare
+              RoleArn:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :role/cdk-hnb659fds-deploy-role-
+                    - Ref: AWS::AccountId
+                    - "-"
+                    - Ref: AWS::Region
+              RunOrder: 1
+            - ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Provider: CloudFormation
+                Version: "1"
+              Configuration:
+                StackName: prod-prod-blueprint
+                ActionMode: CHANGE_SET_EXECUTE
+                ChangeSetName: PipelineChange
+              Name: Deploy
+              RoleArn:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :role/cdk-hnb659fds-deploy-role-
+                    - Ref: AWS::AccountId
+                    - "-"
+                    - Ref: AWS::Region
+              RunOrder: 2
+          Name: prod
+      ArtifactStore:
+        Location:
+          Ref: ekscapstoneclusterinfrapipelinePipelineArtifactsBucketA4EE0DF3
+        Type: S3
+      Name: eks-capstone-cluster-infra-pipeline
+      RestartExecutionOnUpdate: true
+    DependsOn:
+      - ekscapstoneclusterinfrapipelinePipelineRoleDefaultPolicy996AC8A8
+      - ekscapstoneclusterinfrapipelinePipelineRoleA9121227
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Resource
+  ekscapstoneclusterinfrapipelinePipelineSourcemwilliamstrek10ekscapstoneclusterinfraWebhookResourceAD204ADF:
+    Type: AWS::CodePipeline::Webhook
+    Properties:
+      Authentication: GITHUB_HMAC
+      AuthenticationConfiguration:
+        SecretToken: "{{resolve:secretsmanager:github-token:SecretString:::}}"
+      Filters:
+        - JsonPath: $.ref
+          MatchEquals: refs/heads/{Branch}
+      TargetAction: mwilliams-trek10_eks-capstone-cluster-infra
+      TargetPipeline:
+        Ref: ekscapstoneclusterinfrapipelinePipeline0C52836C
+      TargetPipelineVersion: 1
+      RegisterWithThirdParty: true
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Source/mwilliams-trek10_eks-capstone-cluster-infra/WebhookResource
+  ekscapstoneclusterinfrapipelinePipelineBuildekscapstoneclusterinfrapipelinesynthCdkBuildProjectRoleFDBC7BB4:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: codebuild.amazonaws.com
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Build/eks-capstone-cluster-infra-pipeline-synth/CdkBuildProject/Role/Resource
+  ekscapstoneclusterinfrapipelinePipelineBuildekscapstoneclusterinfrapipelinesynthCdkBuildProjectRoleDefaultPolicyA859B4EA:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Effect: Allow
+            Resource:
+              - Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":logs:"
+                    - Ref: AWS::Region
+                    - ":"
+                    - Ref: AWS::AccountId
+                    - :log-group:/aws/codebuild/
+                    - Ref: ekscapstoneclusterinfrapipelinePipelineBuildekscapstoneclusterinfrapipelinesynthCdkBuildProject60D26734
+                    - :*
+              - Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":logs:"
+                    - Ref: AWS::Region
+                    - ":"
+                    - Ref: AWS::AccountId
+                    - :log-group:/aws/codebuild/
+                    - Ref: ekscapstoneclusterinfrapipelinePipelineBuildekscapstoneclusterinfrapipelinesynthCdkBuildProject60D26734
+          - Action:
+              - codebuild:BatchPutCodeCoverages
+              - codebuild:BatchPutTestCases
+              - codebuild:CreateReport
+              - codebuild:CreateReportGroup
+              - codebuild:UpdateReport
+            Effect: Allow
+            Resource:
+              Fn::Join:
+                - ""
+                - - "arn:"
+                  - Ref: AWS::Partition
+                  - ":codebuild:"
+                  - Ref: AWS::Region
+                  - ":"
+                  - Ref: AWS::AccountId
+                  - :report-group/
+                  - Ref: ekscapstoneclusterinfrapipelinePipelineBuildekscapstoneclusterinfrapipelinesynthCdkBuildProject60D26734
+                  - -*
+          - Action:
+              - s3:Abort*
+              - s3:DeleteObject*
+              - s3:GetBucket*
+              - s3:GetObject*
+              - s3:List*
+              - s3:PutObject
+              - s3:PutObjectLegalHold
+              - s3:PutObjectRetention
+              - s3:PutObjectTagging
+              - s3:PutObjectVersionTagging
+            Effect: Allow
+            Resource:
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineArtifactsBucketA4EE0DF3
+                  - Arn
+              - Fn::Join:
+                  - ""
+                  - - Fn::GetAtt:
+                        - ekscapstoneclusterinfrapipelinePipelineArtifactsBucketA4EE0DF3
+                        - Arn
+                    - /*
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineBuildekscapstoneclusterinfrapipelinesynthCdkBuildProjectRoleDefaultPolicyA859B4EA
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineBuildekscapstoneclusterinfrapipelinesynthCdkBuildProjectRoleFDBC7BB4
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Build/eks-capstone-cluster-infra-pipeline-synth/CdkBuildProject/Role/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelinePipelineBuildekscapstoneclusterinfrapipelinesynthCdkBuildProject60D26734:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:5.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Type: LINUX_CONTAINER
+      ServiceRole:
+        Fn::GetAtt:
+          - ekscapstoneclusterinfrapipelinePipelineBuildekscapstoneclusterinfrapipelinesynthCdkBuildProjectRoleFDBC7BB4
+          - Arn
+      Source:
+        BuildSpec: |-
+          {
+            "version": "0.2",
+            "phases": {
+              "install": {
+                "commands": [
+                  "npm install --global npm",
+                  "npm install -g aws-cdk@2.20.0",
+                  "npm install"
+                ]
+              },
+              "build": {
+                "commands": [
+                  "npm run build",
+                  "npx cdk synth"
+                ]
+              }
+            },
+            "artifacts": {
+              "base-directory": "cdk.out",
+              "files": "**/*"
+            }
+          }
+        Type: CODEPIPELINE
+      Cache:
+        Type: NO_CACHE
+      Description: Pipeline step eks-capstone-cluster-infra-pipeline-blueprint/Pipeline/Build/eks-capstone-cluster-infra-pipeline-synth
+      EncryptionKey: alias/aws/s3
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Build/eks-capstone-cluster-infra-pipeline-synth/CdkBuildProject/Resource
+  ekscapstoneclusterinfrapipelinePipelineBuildekscapstoneclusterinfrapipelinesynthCodePipelineActionRoleEC2CCB31:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :root
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Build/eks-capstone-cluster-infra-pipeline-synth/CodePipelineActionRole/Resource
+  ekscapstoneclusterinfrapipelinePipelineBuildekscapstoneclusterinfrapipelinesynthCodePipelineActionRoleDefaultPolicy15B6F55E:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - codebuild:BatchGetBuilds
+              - codebuild:StartBuild
+              - codebuild:StopBuild
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - ekscapstoneclusterinfrapipelinePipelineBuildekscapstoneclusterinfrapipelinesynthCdkBuildProject60D26734
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineBuildekscapstoneclusterinfrapipelinesynthCodePipelineActionRoleDefaultPolicy15B6F55E
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineBuildekscapstoneclusterinfrapipelinesynthCodePipelineActionRoleEC2CCB31
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Build/eks-capstone-cluster-infra-pipeline-synth/CodePipelineActionRole/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelinePipelineUpdatePipelineSelfMutateCodePipelineActionRoleAE5EDD6A:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :root
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/UpdatePipeline/SelfMutate/CodePipelineActionRole/Resource
+  ekscapstoneclusterinfrapipelinePipelineUpdatePipelineSelfMutateCodePipelineActionRoleDefaultPolicy0292EA0E:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - codebuild:BatchGetBuilds
+              - codebuild:StartBuild
+              - codebuild:StopBuild
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - ekscapstoneclusterinfrapipelineUpdatePipelineSelfMutation4061FA22
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineUpdatePipelineSelfMutateCodePipelineActionRoleDefaultPolicy0292EA0E
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineUpdatePipelineSelfMutateCodePipelineActionRoleAE5EDD6A
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/UpdatePipeline/SelfMutate/CodePipelineActionRole/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset1CodePipelineActionRole21CA49AC:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :root
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset1/CodePipelineActionRole/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset1CodePipelineActionRoleDefaultPolicy4F13B9A3:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - codebuild:BatchGetBuilds
+              - codebuild:StartBuild
+              - codebuild:StopBuild
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - ekscapstoneclusterinfrapipelineAssetsFileAsset12A9954B4
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset1CodePipelineActionRoleDefaultPolicy4F13B9A3
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset1CodePipelineActionRole21CA49AC
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset1/CodePipelineActionRole/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset10CodePipelineActionRoleD268E245:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :root
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset10/CodePipelineActionRole/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset10CodePipelineActionRoleDefaultPolicy868A4DC6:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - codebuild:BatchGetBuilds
+              - codebuild:StartBuild
+              - codebuild:StopBuild
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - ekscapstoneclusterinfrapipelineAssetsFileAsset106B788073
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset10CodePipelineActionRoleDefaultPolicy868A4DC6
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset10CodePipelineActionRoleD268E245
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset10/CodePipelineActionRole/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset11CodePipelineActionRole88FF66C2:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :root
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset11/CodePipelineActionRole/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset11CodePipelineActionRoleDefaultPolicy98AAA146:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - codebuild:BatchGetBuilds
+              - codebuild:StartBuild
+              - codebuild:StopBuild
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - ekscapstoneclusterinfrapipelineAssetsFileAsset11DFD14FFC
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset11CodePipelineActionRoleDefaultPolicy98AAA146
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset11CodePipelineActionRole88FF66C2
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset11/CodePipelineActionRole/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset12CodePipelineActionRoleF0926DB9:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :root
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset12/CodePipelineActionRole/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset12CodePipelineActionRoleDefaultPolicy3A18F13E:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - codebuild:BatchGetBuilds
+              - codebuild:StartBuild
+              - codebuild:StopBuild
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - ekscapstoneclusterinfrapipelineAssetsFileAsset1225EADC6E
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset12CodePipelineActionRoleDefaultPolicy3A18F13E
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset12CodePipelineActionRoleF0926DB9
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset12/CodePipelineActionRole/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset13CodePipelineActionRoleEEE98D6F:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :root
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset13/CodePipelineActionRole/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset13CodePipelineActionRoleDefaultPolicyE80435D0:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - codebuild:BatchGetBuilds
+              - codebuild:StartBuild
+              - codebuild:StopBuild
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - ekscapstoneclusterinfrapipelineAssetsFileAsset13D028DA80
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset13CodePipelineActionRoleDefaultPolicyE80435D0
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset13CodePipelineActionRoleEEE98D6F
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset13/CodePipelineActionRole/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset14CodePipelineActionRole68DF1F6D:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :root
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset14/CodePipelineActionRole/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset14CodePipelineActionRoleDefaultPolicyFD3E3D4B:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - codebuild:BatchGetBuilds
+              - codebuild:StartBuild
+              - codebuild:StopBuild
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - ekscapstoneclusterinfrapipelineAssetsFileAsset1485B64133
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset14CodePipelineActionRoleDefaultPolicyFD3E3D4B
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset14CodePipelineActionRole68DF1F6D
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset14/CodePipelineActionRole/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset2CodePipelineActionRole227528AC:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :root
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset2/CodePipelineActionRole/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset2CodePipelineActionRoleDefaultPolicy7B4B1F2A:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - codebuild:BatchGetBuilds
+              - codebuild:StartBuild
+              - codebuild:StopBuild
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - ekscapstoneclusterinfrapipelineAssetsFileAsset25C9C9871
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset2CodePipelineActionRoleDefaultPolicy7B4B1F2A
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset2CodePipelineActionRole227528AC
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset2/CodePipelineActionRole/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset3CodePipelineActionRoleA0C510E5:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :root
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset3/CodePipelineActionRole/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset3CodePipelineActionRoleDefaultPolicyF7958BF4:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - codebuild:BatchGetBuilds
+              - codebuild:StartBuild
+              - codebuild:StopBuild
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - ekscapstoneclusterinfrapipelineAssetsFileAsset38873B944
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset3CodePipelineActionRoleDefaultPolicyF7958BF4
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset3CodePipelineActionRoleA0C510E5
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset3/CodePipelineActionRole/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset4CodePipelineActionRole3A79608A:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :root
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset4/CodePipelineActionRole/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset4CodePipelineActionRoleDefaultPolicyD76BE430:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - codebuild:BatchGetBuilds
+              - codebuild:StartBuild
+              - codebuild:StopBuild
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - ekscapstoneclusterinfrapipelineAssetsFileAsset4745E5335
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset4CodePipelineActionRoleDefaultPolicyD76BE430
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset4CodePipelineActionRole3A79608A
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset4/CodePipelineActionRole/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset5CodePipelineActionRoleE37051A8:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :root
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset5/CodePipelineActionRole/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset5CodePipelineActionRoleDefaultPolicy5F5CA96E:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - codebuild:BatchGetBuilds
+              - codebuild:StartBuild
+              - codebuild:StopBuild
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - ekscapstoneclusterinfrapipelineAssetsFileAsset5213E04CA
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset5CodePipelineActionRoleDefaultPolicy5F5CA96E
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset5CodePipelineActionRoleE37051A8
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset5/CodePipelineActionRole/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset6CodePipelineActionRoleA7244923:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :root
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset6/CodePipelineActionRole/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset6CodePipelineActionRoleDefaultPolicyF166D822:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - codebuild:BatchGetBuilds
+              - codebuild:StartBuild
+              - codebuild:StopBuild
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - ekscapstoneclusterinfrapipelineAssetsFileAsset60E4AEB9D
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset6CodePipelineActionRoleDefaultPolicyF166D822
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset6CodePipelineActionRoleA7244923
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset6/CodePipelineActionRole/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset7CodePipelineActionRoleED0F5C54:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :root
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset7/CodePipelineActionRole/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset7CodePipelineActionRoleDefaultPolicyA0F49A0A:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - codebuild:BatchGetBuilds
+              - codebuild:StartBuild
+              - codebuild:StopBuild
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - ekscapstoneclusterinfrapipelineAssetsFileAsset77FAE7EDE
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset7CodePipelineActionRoleDefaultPolicyA0F49A0A
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset7CodePipelineActionRoleED0F5C54
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset7/CodePipelineActionRole/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset8CodePipelineActionRoleE67633CD:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :root
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset8/CodePipelineActionRole/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset8CodePipelineActionRoleDefaultPolicy54CF1209:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - codebuild:BatchGetBuilds
+              - codebuild:StartBuild
+              - codebuild:StopBuild
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - ekscapstoneclusterinfrapipelineAssetsFileAsset884F12D27
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset8CodePipelineActionRoleDefaultPolicy54CF1209
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset8CodePipelineActionRoleE67633CD
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset8/CodePipelineActionRole/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset9CodePipelineActionRole956813A9:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :root
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset9/CodePipelineActionRole/Resource
+  ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset9CodePipelineActionRoleDefaultPolicy7C8BB89A:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - codebuild:BatchGetBuilds
+              - codebuild:StartBuild
+              - codebuild:StopBuild
+            Effect: Allow
+            Resource:
+              Fn::GetAtt:
+                - ekscapstoneclusterinfrapipelineAssetsFileAsset9681D7D83
+                - Arn
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset9CodePipelineActionRoleDefaultPolicy7C8BB89A
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelinePipelineAssetsFileAsset9CodePipelineActionRole956813A9
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Pipeline/Assets/FileAsset9/CodePipelineActionRole/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelineUpdatePipelineSelfMutationRoleBD64915C:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: codebuild.amazonaws.com
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/UpdatePipeline/SelfMutation/Role/Resource
+  ekscapstoneclusterinfrapipelineUpdatePipelineSelfMutationRoleDefaultPolicy02C69939:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Effect: Allow
+            Resource:
+              - Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":logs:"
+                    - Ref: AWS::Region
+                    - ":"
+                    - Ref: AWS::AccountId
+                    - :log-group:/aws/codebuild/
+                    - Ref: ekscapstoneclusterinfrapipelineUpdatePipelineSelfMutation4061FA22
+                    - :*
+              - Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":logs:"
+                    - Ref: AWS::Region
+                    - ":"
+                    - Ref: AWS::AccountId
+                    - :log-group:/aws/codebuild/
+                    - Ref: ekscapstoneclusterinfrapipelineUpdatePipelineSelfMutation4061FA22
+          - Action:
+              - codebuild:BatchPutCodeCoverages
+              - codebuild:BatchPutTestCases
+              - codebuild:CreateReport
+              - codebuild:CreateReportGroup
+              - codebuild:UpdateReport
+            Effect: Allow
+            Resource:
+              Fn::Join:
+                - ""
+                - - "arn:"
+                  - Ref: AWS::Partition
+                  - ":codebuild:"
+                  - Ref: AWS::Region
+                  - ":"
+                  - Ref: AWS::AccountId
+                  - :report-group/
+                  - Ref: ekscapstoneclusterinfrapipelineUpdatePipelineSelfMutation4061FA22
+                  - -*
+          - Action: sts:AssumeRole
+            Condition:
+              ForAnyValue:StringEquals:
+                iam:ResourceTag/aws-cdk:bootstrap-role:
+                  - image-publishing
+                  - file-publishing
+                  - deploy
+            Effect: Allow
+            Resource:
+              Fn::Join:
+                - ""
+                - - "arn:*:iam::"
+                  - Ref: AWS::AccountId
+                  - :role/*
+          - Action:
+              - cloudformation:DescribeStacks
+              - s3:ListBucket
+            Effect: Allow
+            Resource: "*"
+          - Action:
+              - s3:GetBucket*
+              - s3:GetObject*
+              - s3:List*
+            Effect: Allow
+            Resource:
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineArtifactsBucketA4EE0DF3
+                  - Arn
+              - Fn::Join:
+                  - ""
+                  - - Fn::GetAtt:
+                        - ekscapstoneclusterinfrapipelinePipelineArtifactsBucketA4EE0DF3
+                        - Arn
+                    - /*
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelineUpdatePipelineSelfMutationRoleDefaultPolicy02C69939
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelineUpdatePipelineSelfMutationRoleBD64915C
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/UpdatePipeline/SelfMutation/Role/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelineUpdatePipelineSelfMutation4061FA22:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:5.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Type: LINUX_CONTAINER
+      ServiceRole:
+        Fn::GetAtt:
+          - ekscapstoneclusterinfrapipelineUpdatePipelineSelfMutationRoleBD64915C
+          - Arn
+      Source:
+        BuildSpec: |-
+          {
+            "version": "0.2",
+            "phases": {
+              "install": {
+                "commands": [
+                  "npm install -g aws-cdk@2"
+                ]
+              },
+              "build": {
+                "commands": [
+                  "cdk -a . deploy eks-capstone-cluster-infra-pipeline-blueprint --require-approval=never --verbose"
+                ]
+              }
+            }
+          }
+        Type: CODEPIPELINE
+      Cache:
+        Type: NO_CACHE
+      Description: Pipeline step eks-capstone-cluster-infra-pipeline-blueprint/Pipeline/UpdatePipeline/SelfMutate
+      EncryptionKey: alias/aws/s3
+      Name: eks-capstone-cluster-infra-pipeline-selfupdate
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/UpdatePipeline/SelfMutation/Resource
+  ekscapstoneclusterinfrapipelineAssetsFileRoleE9708E5F:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS:
+                Fn::Join:
+                  - ""
+                  - - "arn:"
+                    - Ref: AWS::Partition
+                    - ":iam::"
+                    - Ref: AWS::AccountId
+                    - :root
+              Service: codebuild.amazonaws.com
+        Version: "2012-10-17"
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Assets/FileRole/Resource
+  ekscapstoneclusterinfrapipelineAssetsFileRoleDefaultPolicy3A3F7FDF:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Effect: Allow
+            Resource:
+              Fn::Join:
+                - ""
+                - - "arn:"
+                  - Ref: AWS::Partition
+                  - ":logs:"
+                  - Ref: AWS::Region
+                  - ":"
+                  - Ref: AWS::AccountId
+                  - :log-group:/aws/codebuild/*
+          - Action:
+              - codebuild:BatchPutCodeCoverages
+              - codebuild:BatchPutTestCases
+              - codebuild:CreateReport
+              - codebuild:CreateReportGroup
+              - codebuild:UpdateReport
+            Effect: Allow
+            Resource:
+              Fn::Join:
+                - ""
+                - - "arn:"
+                  - Ref: AWS::Partition
+                  - ":codebuild:"
+                  - Ref: AWS::Region
+                  - ":"
+                  - Ref: AWS::AccountId
+                  - :report-group/*
+          - Action:
+              - codebuild:BatchGetBuilds
+              - codebuild:StartBuild
+              - codebuild:StopBuild
+            Effect: Allow
+            Resource: "*"
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}
+          - Action:
+              - s3:GetBucket*
+              - s3:GetObject*
+              - s3:List*
+            Effect: Allow
+            Resource:
+              - Fn::GetAtt:
+                  - ekscapstoneclusterinfrapipelinePipelineArtifactsBucketA4EE0DF3
+                  - Arn
+              - Fn::Join:
+                  - ""
+                  - - Fn::GetAtt:
+                        - ekscapstoneclusterinfrapipelinePipelineArtifactsBucketA4EE0DF3
+                        - Arn
+                    - /*
+        Version: "2012-10-17"
+      PolicyName: ekscapstoneclusterinfrapipelineAssetsFileRoleDefaultPolicy3A3F7FDF
+      Roles:
+        - Ref: ekscapstoneclusterinfrapipelineAssetsFileRoleE9708E5F
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Assets/FileRole/DefaultPolicy/Resource
+  ekscapstoneclusterinfrapipelineAssetsFileAsset12A9954B4:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:5.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Type: LINUX_CONTAINER
+      ServiceRole:
+        Fn::GetAtt:
+          - ekscapstoneclusterinfrapipelineAssetsFileRoleE9708E5F
+          - Arn
+      Source:
+        BuildSpec: |-
+          {
+            "version": "0.2",
+            "phases": {
+              "install": {
+                "commands": [
+                  "npm install -g cdk-assets@2"
+                ]
+              },
+              "build": {
+                "commands": [
+                  "cdk-assets --path \"assembly-eks-capstone-cluster-infra-pipeline-blueprint-dev/ekscapstoneclusterinfrapipelineblueprintdevdevblueprint708BF684.assets.json\" --verbose publish \"4288ebb3652acdf2d828b7db7ca44a7162a401ace50ebb4026e84b18a02a06ee:current_account-current_region\""
+                ]
+              }
+            }
+          }
+        Type: CODEPIPELINE
+      Cache:
+        Type: NO_CACHE
+      Description: Pipeline step eks-capstone-cluster-infra-pipeline-blueprint/Pipeline/Assets/FileAsset1
+      EncryptionKey: alias/aws/s3
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Assets/FileAsset1/Resource
+  ekscapstoneclusterinfrapipelineAssetsFileAsset106B788073:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:5.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Type: LINUX_CONTAINER
+      ServiceRole:
+        Fn::GetAtt:
+          - ekscapstoneclusterinfrapipelineAssetsFileRoleE9708E5F
+          - Arn
+      Source:
+        BuildSpec: |-
+          {
+            "version": "0.2",
+            "phases": {
+              "install": {
+                "commands": [
+                  "npm install -g cdk-assets@2"
+                ]
+              },
+              "build": {
+                "commands": [
+                  "cdk-assets --path \"assembly-eks-capstone-cluster-infra-pipeline-blueprint-dev/ekscapstoneclusterinfrapipelineblueprintdevdevblueprint708BF684.assets.json\" --verbose publish \"735568a956d95795853e7762df43fd78b515a0ee712187c7cc594964a1163531:current_account-current_region\""
+                ]
+              }
+            }
+          }
+        Type: CODEPIPELINE
+      Cache:
+        Type: NO_CACHE
+      Description: Pipeline step eks-capstone-cluster-infra-pipeline-blueprint/Pipeline/Assets/FileAsset10
+      EncryptionKey: alias/aws/s3
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Assets/FileAsset10/Resource
+  ekscapstoneclusterinfrapipelineAssetsFileAsset11DFD14FFC:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:5.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Type: LINUX_CONTAINER
+      ServiceRole:
+        Fn::GetAtt:
+          - ekscapstoneclusterinfrapipelineAssetsFileRoleE9708E5F
+          - Arn
+      Source:
+        BuildSpec: |-
+          {
+            "version": "0.2",
+            "phases": {
+              "install": {
+                "commands": [
+                  "npm install -g cdk-assets@2"
+                ]
+              },
+              "build": {
+                "commands": [
+                  "cdk-assets --path \"assembly-eks-capstone-cluster-infra-pipeline-blueprint-qa/ekscapstoneclusterinfrapipelineblueprintqaqablueprint4CAE25A0.assets.json\" --verbose publish \"cbcb75bdc1c34797fdef6f5b97a0ac678bf1b840e221244c6018416d67653853:current_account-current_region\""
+                ]
+              }
+            }
+          }
+        Type: CODEPIPELINE
+      Cache:
+        Type: NO_CACHE
+      Description: Pipeline step eks-capstone-cluster-infra-pipeline-blueprint/Pipeline/Assets/FileAsset11
+      EncryptionKey: alias/aws/s3
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Assets/FileAsset11/Resource
+  ekscapstoneclusterinfrapipelineAssetsFileAsset1225EADC6E:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:5.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Type: LINUX_CONTAINER
+      ServiceRole:
+        Fn::GetAtt:
+          - ekscapstoneclusterinfrapipelineAssetsFileRoleE9708E5F
+          - Arn
+      Source:
+        BuildSpec: |-
+          {
+            "version": "0.2",
+            "phases": {
+              "install": {
+                "commands": [
+                  "npm install -g cdk-assets@2"
+                ]
+              },
+              "build": {
+                "commands": [
+                  "cdk-assets --path \"assembly-eks-capstone-cluster-infra-pipeline-blueprint-qa/ekscapstoneclusterinfrapipelineblueprintqaqablueprint4CAE25A0.assets.json\" --verbose publish \"83848b7acbc24a35954fb644f17f1206887b6549b58ce9ba78b11cc8c722b85d:current_account-current_region\""
+                ]
+              }
+            }
+          }
+        Type: CODEPIPELINE
+      Cache:
+        Type: NO_CACHE
+      Description: Pipeline step eks-capstone-cluster-infra-pipeline-blueprint/Pipeline/Assets/FileAsset12
+      EncryptionKey: alias/aws/s3
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Assets/FileAsset12/Resource
+  ekscapstoneclusterinfrapipelineAssetsFileAsset13D028DA80:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:5.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Type: LINUX_CONTAINER
+      ServiceRole:
+        Fn::GetAtt:
+          - ekscapstoneclusterinfrapipelineAssetsFileRoleE9708E5F
+          - Arn
+      Source:
+        BuildSpec: |-
+          {
+            "version": "0.2",
+            "phases": {
+              "install": {
+                "commands": [
+                  "npm install -g cdk-assets@2"
+                ]
+              },
+              "build": {
+                "commands": [
+                  "cdk-assets --path \"assembly-eks-capstone-cluster-infra-pipeline-blueprint-prod/ekscapstoneclusterinfrapipelineblueprintprodprodblueprint98B8F7B5.assets.json\" --verbose publish \"ab6f9acbb7613d9030c8497c8a31f98825d1537719071af25332db05a727ed6e:current_account-current_region\""
+                ]
+              }
+            }
+          }
+        Type: CODEPIPELINE
+      Cache:
+        Type: NO_CACHE
+      Description: Pipeline step eks-capstone-cluster-infra-pipeline-blueprint/Pipeline/Assets/FileAsset13
+      EncryptionKey: alias/aws/s3
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Assets/FileAsset13/Resource
+  ekscapstoneclusterinfrapipelineAssetsFileAsset1485B64133:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:5.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Type: LINUX_CONTAINER
+      ServiceRole:
+        Fn::GetAtt:
+          - ekscapstoneclusterinfrapipelineAssetsFileRoleE9708E5F
+          - Arn
+      Source:
+        BuildSpec: |-
+          {
+            "version": "0.2",
+            "phases": {
+              "install": {
+                "commands": [
+                  "npm install -g cdk-assets@2"
+                ]
+              },
+              "build": {
+                "commands": [
+                  "cdk-assets --path \"assembly-eks-capstone-cluster-infra-pipeline-blueprint-prod/ekscapstoneclusterinfrapipelineblueprintprodprodblueprint98B8F7B5.assets.json\" --verbose publish \"07f6e914fb819fcaabfdcccdbcd5d365ec9f4451f3b6c3facf1949aebc490d1a:current_account-current_region\""
+                ]
+              }
+            }
+          }
+        Type: CODEPIPELINE
+      Cache:
+        Type: NO_CACHE
+      Description: Pipeline step eks-capstone-cluster-infra-pipeline-blueprint/Pipeline/Assets/FileAsset14
+      EncryptionKey: alias/aws/s3
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Assets/FileAsset14/Resource
+  ekscapstoneclusterinfrapipelineAssetsFileAsset25C9C9871:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:5.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Type: LINUX_CONTAINER
+      ServiceRole:
+        Fn::GetAtt:
+          - ekscapstoneclusterinfrapipelineAssetsFileRoleE9708E5F
+          - Arn
+      Source:
+        BuildSpec: |-
+          {
+            "version": "0.2",
+            "phases": {
+              "install": {
+                "commands": [
+                  "npm install -g cdk-assets@2"
+                ]
+              },
+              "build": {
+                "commands": [
+                  "cdk-assets --path \"assembly-eks-capstone-cluster-infra-pipeline-blueprint-dev/ekscapstoneclusterinfrapipelineblueprintdevdevblueprint708BF684.assets.json\" --verbose publish \"970b03978c61124e4355018117f9fcfb31ec34fda53fc8291fa281e38bb96507:current_account-current_region\""
+                ]
+              }
+            }
+          }
+        Type: CODEPIPELINE
+      Cache:
+        Type: NO_CACHE
+      Description: Pipeline step eks-capstone-cluster-infra-pipeline-blueprint/Pipeline/Assets/FileAsset2
+      EncryptionKey: alias/aws/s3
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Assets/FileAsset2/Resource
+  ekscapstoneclusterinfrapipelineAssetsFileAsset38873B944:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:5.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Type: LINUX_CONTAINER
+      ServiceRole:
+        Fn::GetAtt:
+          - ekscapstoneclusterinfrapipelineAssetsFileRoleE9708E5F
+          - Arn
+      Source:
+        BuildSpec: |-
+          {
+            "version": "0.2",
+            "phases": {
+              "install": {
+                "commands": [
+                  "npm install -g cdk-assets@2"
+                ]
+              },
+              "build": {
+                "commands": [
+                  "cdk-assets --path \"assembly-eks-capstone-cluster-infra-pipeline-blueprint-dev/ekscapstoneclusterinfrapipelineblueprintdevdevblueprint708BF684.assets.json\" --verbose publish \"885e74c18034f7d2833ec7129bb76a442e75d84f9c21ce7990bbb3aea67ab779:current_account-current_region\""
+                ]
+              }
+            }
+          }
+        Type: CODEPIPELINE
+      Cache:
+        Type: NO_CACHE
+      Description: Pipeline step eks-capstone-cluster-infra-pipeline-blueprint/Pipeline/Assets/FileAsset3
+      EncryptionKey: alias/aws/s3
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Assets/FileAsset3/Resource
+  ekscapstoneclusterinfrapipelineAssetsFileAsset4745E5335:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:5.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Type: LINUX_CONTAINER
+      ServiceRole:
+        Fn::GetAtt:
+          - ekscapstoneclusterinfrapipelineAssetsFileRoleE9708E5F
+          - Arn
+      Source:
+        BuildSpec: |-
+          {
+            "version": "0.2",
+            "phases": {
+              "install": {
+                "commands": [
+                  "npm install -g cdk-assets@2"
+                ]
+              },
+              "build": {
+                "commands": [
+                  "cdk-assets --path \"assembly-eks-capstone-cluster-infra-pipeline-blueprint-dev/ekscapstoneclusterinfrapipelineblueprintdevdevblueprint708BF684.assets.json\" --verbose publish \"a70c48e7047fb793b2378668accb1dc2d92f2d7b1fff80c9c718f4964dc69cb8:current_account-current_region\""
+                ]
+              }
+            }
+          }
+        Type: CODEPIPELINE
+      Cache:
+        Type: NO_CACHE
+      Description: Pipeline step eks-capstone-cluster-infra-pipeline-blueprint/Pipeline/Assets/FileAsset4
+      EncryptionKey: alias/aws/s3
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Assets/FileAsset4/Resource
+  ekscapstoneclusterinfrapipelineAssetsFileAsset5213E04CA:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:5.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Type: LINUX_CONTAINER
+      ServiceRole:
+        Fn::GetAtt:
+          - ekscapstoneclusterinfrapipelineAssetsFileRoleE9708E5F
+          - Arn
+      Source:
+        BuildSpec: |-
+          {
+            "version": "0.2",
+            "phases": {
+              "install": {
+                "commands": [
+                  "npm install -g cdk-assets@2"
+                ]
+              },
+              "build": {
+                "commands": [
+                  "cdk-assets --path \"assembly-eks-capstone-cluster-infra-pipeline-blueprint-dev/ekscapstoneclusterinfrapipelineblueprintdevdevblueprint708BF684.assets.json\" --verbose publish \"92c405c4551a308bcdd55823f8b16268bd3c38fd2a011edaaf3ed72a80f557c4:current_account-current_region\""
+                ]
+              }
+            }
+          }
+        Type: CODEPIPELINE
+      Cache:
+        Type: NO_CACHE
+      Description: Pipeline step eks-capstone-cluster-infra-pipeline-blueprint/Pipeline/Assets/FileAsset5
+      EncryptionKey: alias/aws/s3
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Assets/FileAsset5/Resource
+  ekscapstoneclusterinfrapipelineAssetsFileAsset60E4AEB9D:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:5.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Type: LINUX_CONTAINER
+      ServiceRole:
+        Fn::GetAtt:
+          - ekscapstoneclusterinfrapipelineAssetsFileRoleE9708E5F
+          - Arn
+      Source:
+        BuildSpec: |-
+          {
+            "version": "0.2",
+            "phases": {
+              "install": {
+                "commands": [
+                  "npm install -g cdk-assets@2"
+                ]
+              },
+              "build": {
+                "commands": [
+                  "cdk-assets --path \"assembly-eks-capstone-cluster-infra-pipeline-blueprint-dev/ekscapstoneclusterinfrapipelineblueprintdevdevblueprint708BF684.assets.json\" --verbose publish \"ea17febe6d04c66048f3e8e060c71685c0cb53122abceff44842d27bc0d4a03e:current_account-current_region\""
+                ]
+              }
+            }
+          }
+        Type: CODEPIPELINE
+      Cache:
+        Type: NO_CACHE
+      Description: Pipeline step eks-capstone-cluster-infra-pipeline-blueprint/Pipeline/Assets/FileAsset6
+      EncryptionKey: alias/aws/s3
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Assets/FileAsset6/Resource
+  ekscapstoneclusterinfrapipelineAssetsFileAsset77FAE7EDE:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:5.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Type: LINUX_CONTAINER
+      ServiceRole:
+        Fn::GetAtt:
+          - ekscapstoneclusterinfrapipelineAssetsFileRoleE9708E5F
+          - Arn
+      Source:
+        BuildSpec: |-
+          {
+            "version": "0.2",
+            "phases": {
+              "install": {
+                "commands": [
+                  "npm install -g cdk-assets@2"
+                ]
+              },
+              "build": {
+                "commands": [
+                  "cdk-assets --path \"assembly-eks-capstone-cluster-infra-pipeline-blueprint-dev/ekscapstoneclusterinfrapipelineblueprintdevdevblueprint708BF684.assets.json\" --verbose publish \"e87ed7caf70963cf8fd827aa2d9795431f6e07a2d25d1dbac646437e0e0761ab:current_account-current_region\""
+                ]
+              }
+            }
+          }
+        Type: CODEPIPELINE
+      Cache:
+        Type: NO_CACHE
+      Description: Pipeline step eks-capstone-cluster-infra-pipeline-blueprint/Pipeline/Assets/FileAsset7
+      EncryptionKey: alias/aws/s3
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Assets/FileAsset7/Resource
+  ekscapstoneclusterinfrapipelineAssetsFileAsset884F12D27:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:5.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Type: LINUX_CONTAINER
+      ServiceRole:
+        Fn::GetAtt:
+          - ekscapstoneclusterinfrapipelineAssetsFileRoleE9708E5F
+          - Arn
+      Source:
+        BuildSpec: |-
+          {
+            "version": "0.2",
+            "phases": {
+              "install": {
+                "commands": [
+                  "npm install -g cdk-assets@2"
+                ]
+              },
+              "build": {
+                "commands": [
+                  "cdk-assets --path \"assembly-eks-capstone-cluster-infra-pipeline-blueprint-dev/ekscapstoneclusterinfrapipelineblueprintdevdevblueprint708BF684.assets.json\" --verbose publish \"f6936269880ca7cba4a55a3b31d35973da96a3a8d67bf1bdb89ec0377026b8ee:current_account-current_region\""
+                ]
+              }
+            }
+          }
+        Type: CODEPIPELINE
+      Cache:
+        Type: NO_CACHE
+      Description: Pipeline step eks-capstone-cluster-infra-pipeline-blueprint/Pipeline/Assets/FileAsset8
+      EncryptionKey: alias/aws/s3
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Assets/FileAsset8/Resource
+  ekscapstoneclusterinfrapipelineAssetsFileAsset9681D7D83:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:5.0
+        ImagePullCredentialsType: CODEBUILD
+        PrivilegedMode: false
+        Type: LINUX_CONTAINER
+      ServiceRole:
+        Fn::GetAtt:
+          - ekscapstoneclusterinfrapipelineAssetsFileRoleE9708E5F
+          - Arn
+      Source:
+        BuildSpec: |-
+          {
+            "version": "0.2",
+            "phases": {
+              "install": {
+                "commands": [
+                  "npm install -g cdk-assets@2"
+                ]
+              },
+              "build": {
+                "commands": [
+                  "cdk-assets --path \"assembly-eks-capstone-cluster-infra-pipeline-blueprint-dev/ekscapstoneclusterinfrapipelineblueprintdevdevblueprint708BF684.assets.json\" --verbose publish \"3c46e51f0efe52a25e8dbeaecc932fbcee25ebd5227d64584a62aa8dc2925641:current_account-current_region\""
+                ]
+              }
+            }
+          }
+        Type: CODEPIPELINE
+      Cache:
+        Type: NO_CACHE
+      Description: Pipeline step eks-capstone-cluster-infra-pipeline-blueprint/Pipeline/Assets/FileAsset9
+      EncryptionKey: alias/aws/s3
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/eks-capstone-cluster-infra-pipeline/Assets/FileAsset9/Resource
+  CDKMetadata:
+    Type: AWS::CDK::Metadata
+    Properties:
+      Analytics: v2:deflate64:H4sIAAAAAAAA/01QQQ6CMBB8i/eyAhofIB8gePBooNS4ULqEFo1p+ncLBeE0s7OT2cmmkMYQH8qPjnjdRhIrsDdT8pb12AuJSmjIqBb5MjHvfFjulXUP9r/LnmrP76J6EbWO6RPY68hbYSZ5YQFyksi/mxxmx7DswBYk56AZN+fqmVpUI8p6q5AP1Ag+n1moc6wQmsaBh6gdz0jVaJCUY8pHQaOP7+QCydk/pNGI0TAqg52AIuAPhdUJGywBAAA=
+    Metadata:
+      aws:cdk:path: eks-capstone-cluster-infra-pipeline-blueprint/CDKMetadata/Default
+    Condition: CDKMetadataAvailable
+Conditions:
+  CDKMetadataAvailable:
+    Fn::Or:
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - af-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ca-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-northwest-1
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-3
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - me-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - sa-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-2
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-2
+Parameters:
+  BootstrapVersion:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: /cdk-bootstrap/hnb659fds/version
+    Description: Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]
+Rules:
+  CheckBootstrapVersion:
+    Assertions:
+      - Assert:
+          Fn::Not:
+            - Fn::Contains:
+                - - "1"
+                  - "2"
+                  - "3"
+                  - "4"
+                  - "5"
+                - Ref: BootstrapVersion
+        AssertDescription: CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.
+
