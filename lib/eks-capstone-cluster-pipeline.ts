@@ -87,11 +87,11 @@ export default class EksCapstoneClusterPipeline extends Construct {
             stackBuilder: blueprint.clone(region, account).addOns(prodStageArgoCd)
         };
 
-        const prodDrStageArgoCd: ArgoCDAddOn = getArgoCdAddOnStage(argoCdRepo, 'env/prod');
-        const prodDrStage: StackStage = {
-            id: 'prod-dr',
-            stackBuilder: blueprint.clone('us-west-2', account).addOns(prodDrStageArgoCd)
-        };
+        // const prodDrStageArgoCd: ArgoCDAddOn = getArgoCdAddOnStage(argoCdRepo, 'env/prod');
+        // const prodDrStage: StackStage = {
+        //     id: 'prod-dr',
+        //     stackBuilder: blueprint.clone('us-west-2', account).addOns(prodDrStageArgoCd)
+        // };
 
         /******************************
          Build Pipeline
