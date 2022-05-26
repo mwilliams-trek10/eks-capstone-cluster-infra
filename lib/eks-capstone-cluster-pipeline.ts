@@ -108,11 +108,11 @@ export default class EksCapstoneClusterPipeline extends Construct {
             .owner('mwilliams-trek10')
             .repository(repo)
             .stage(devStage)
-            .stage(qaStage)
-            .wave({
-                id: "production-wave",
-                stages: [prodStage /*, prodDrStage*/]
-            })
+            // .stage(qaStage)
+            // .wave({
+            //     id: "production-wave",
+            //     stages: [prodStage /*, prodDrStage*/]
+            // })
             .build(scope, id+'-blueprint', props)
     }
 }
