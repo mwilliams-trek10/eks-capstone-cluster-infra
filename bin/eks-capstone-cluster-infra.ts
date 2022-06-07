@@ -3,6 +3,7 @@ import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import EksCapstoneClusterPipeline from "../lib/eks-capstone-cluster-pipeline";
 import {DefaultStackSynthesizer, StackProps} from "aws-cdk-lib";
+import EksCapstoneClusterInfraStack from "../lib/eks-capstone-cluster-infra-stack";
 
 const account = process.env.CDK_DEFAULT_ACCOUNT;
 const region = process.env.CDK_DEFAULT_REGION;
@@ -22,6 +23,14 @@ new EksCapstoneClusterPipeline(app, id+'-pipeline', props);
 
 
 /*
-cdk bootstrap --toolkit-stack-name=mcw-eks-blueprint --qualifier=mcw-eks-bp
+cdk bootstrap --toolkit-stack-name=mcw-eks-blueprint --qualifier=mcw-eks
+
+arn:aws:iam::549005336969:role/eks-capstone-cluster-infr-ekscapstoneclusterinfrap-P5X6U613JKQX
+
+message:
+arn:aws:iam::549005336969:role/cdk-mcw-eks-cfn-exec-role-549005336969-ca-central-1
+
+actual arn:
+arn:aws:iam::549005336969:role/cdk-mcw-eks-cfn-exec-role-549005336969-ca-central-1
 
  */

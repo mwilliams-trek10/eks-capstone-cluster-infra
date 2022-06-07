@@ -5,7 +5,8 @@ export default class ReportApplicationTeam extends ApplicationTeam {
     constructor(name: string, accountID: string) {
         super({
             name: name,
-            users: [new ArnPrincipal(`arn:aws:iam::${accountID}:user/application`)]
+            userRoleArn: `arn:aws:iam::${accountID}:role/report_application_team`,
+            // namespace: 'reporting'
         });
     }
 }

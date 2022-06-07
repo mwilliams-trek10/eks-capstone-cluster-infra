@@ -5,7 +5,7 @@ export default class EksPlatformTeam extends PlatformTeam {
     constructor(accountID: string) {
         super({
             name: "platform",
-            users: [new ArnPrincipal(`arn:aws:iam::${accountID}:user/platform`)]
+            userRoleArn: `arn:aws:iam::${accountID}:role/eks_platform_team`
         })
     }
 }

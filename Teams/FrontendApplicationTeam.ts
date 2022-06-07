@@ -5,7 +5,8 @@ export default class FrontendApplicationTeam extends ApplicationTeam {
     constructor(name: string, accountID: string) {
         super({
             name: name,
-            users: [new ArnPrincipal(`arn:aws:iam::${accountID}:user/application`)]
+            userRoleArn: `arn:aws:iam::${accountID}:role/frontend_application_team`,
+            // namespace: 'frontend'
         });
     }
 }
