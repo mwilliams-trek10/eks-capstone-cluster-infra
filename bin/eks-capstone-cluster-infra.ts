@@ -3,7 +3,7 @@ import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import EksCapstoneClusterPipeline from "../lib/eks-capstone-cluster-pipeline";
 import {DefaultStackSynthesizer, StackProps} from "aws-cdk-lib";
-import EksCapstoneClusterInfraStack from "../lib/eks-capstone-cluster-infra-stack";
+import EksCapstoneCluster from "../lib/eks-capstone-cluster";
 
 const account = process.env.CDK_DEFAULT_ACCOUNT;
 const region = process.env.CDK_DEFAULT_REGION;
@@ -18,7 +18,7 @@ const app = new cdk.App();
 
 const id: string = 'eks-capstone-cluster-infra';
 
-//new EksCapstoneClusterInfraStack(app, id+'-stack', props);
+new EksCapstoneCluster(app, id+'-cluster', props);
 new EksCapstoneClusterPipeline(app, id+'-pipeline', props);
 
 

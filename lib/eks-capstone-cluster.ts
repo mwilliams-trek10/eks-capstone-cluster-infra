@@ -2,7 +2,7 @@ import { Construct } from 'constructs';
 import * as blueprints from '@aws-quickstart/eks-blueprints';
 import * as cdk from 'aws-cdk-lib';
 
-export default class EksCapstoneClusterInfraStack extends Construct {
+export default class EksCapstoneCluster extends Construct {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id);
 
@@ -15,6 +15,6 @@ export default class EksCapstoneClusterInfraStack extends Construct {
         .account(account)
         .region(region)
         .addOns()
-        .build(scope, id+'-blueprint');
+        .build(scope, id+'-stack');
   }
 }

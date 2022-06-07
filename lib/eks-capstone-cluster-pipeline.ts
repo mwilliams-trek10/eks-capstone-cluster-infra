@@ -64,7 +64,8 @@ export default class EksCapstoneClusterPipeline extends Construct {
         });
 
         // Create base blueprint.
-        const blueprint = blueprints.EksBlueprint.builder()
+        const blueprint = blueprints.EksBlueprint
+            .builder()
             .account(account)
             .region(region)
             .addOns(awsLoadBalancerControllerAddOn, kubeProxyAddOn, coreDnsAddOn, vpcCniAddOn, karpenterAddOn, calicoAddOn)
@@ -157,14 +158,14 @@ export default class EksCapstoneClusterPipeline extends Construct {
          ******************************/
 
         const repo: GitHubSourceRepository = {
-            credentialsSecretName: 'github-token',
-            repoUrl: 'eks-capstone-cluster-infra',
-            targetRevision: 'main'
+            credentialsSecretName: "github-token",
+            repoUrl: "eks-capstone-cluster-infra",
+            targetRevision: "main"
         };
 
         blueprints.CodePipelineStack.builder()
-            .name('eks-capstone-cluster-infra-pipeline')
-            .owner('mwilliams-trek10')
+            .name("eks-capstone-cluster-infra-pipeline")
+            .owner("mwilliams-trek10")
             .repository(repo)
             .stage(devStage)
             // .stage(stagingStage)
@@ -172,7 +173,7 @@ export default class EksCapstoneClusterPipeline extends Construct {
             //     id: "production-wave",
             //     stages: [prodStage /*, prodDrStage*/]
             // })
-            .build(scope, id+'-blueprint', props)
+            .build(scope, id+'-stack', props)
     }
 }
 
