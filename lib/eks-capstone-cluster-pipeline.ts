@@ -157,7 +157,7 @@ export default class EksCapstoneClusterPipeline extends Construct {
          ******************************/
 
         const repo: GitHubSourceRepository = {
-            credentialsSecretName: 'mcw-github-token',
+            credentialsSecretName: 'github-token',
             repoUrl: 'eks-capstone-cluster-infra',
             targetRevision: 'main'
         };
