@@ -5,7 +5,7 @@ import {
     ArgoCDAddOn, AwsLoadBalancerControllerAddOn, CalicoAddOn, ClusterProvider,
     CoreDnsAddOn, EksBlueprintProps,
     KarpenterAddOn,
-    KubeProxyAddOn, MngClusterProviderProps,
+    KubeProxyAddOn, MetricsServerAddOn, MngClusterProviderProps,
     StackStage, Team,
     VpcCniAddOn
 } from "@aws-quickstart/eks-blueprints";
@@ -54,6 +54,8 @@ export default class EksCapstoneClusterPipeline extends Construct {
 
         const calicoAddOn: CalicoAddOn = new CalicoAddOn();
 
+        const metricsServerAddOn: MetricsServerAddOn = new MetricsServerAddOn();
+
         // Karpenter:
         const karpenterAddOn: KarpenterAddOn = new blueprints.KarpenterAddOn({
             provisionerSpecs: {
@@ -68,7 +70,13 @@ export default class EksCapstoneClusterPipeline extends Construct {
             .builder()
             .account(account)
             .region(region)
-            .addOns(awsLoadBalancerControllerAddOn, kubeProxyAddOn, coreDnsAddOn, vpcCniAddOn, karpenterAddOn, calicoAddOn)
+            .addOns(awsLoadBalancerControllerAddOn,
+                kubeProxyAddOn,
+                coreDnsAddOn,
+                vpcCniAddOn,
+                karpenterAddOn,
+                calicoAddOn,
+                metricsServerAddOn)
             .teams();
 
         /******************************
