@@ -3,7 +3,7 @@
 // import * as EksCapstoneClusterInfra from '../lib/eks-capstone-cluster-infra-stack';
 
 // example test. To run these tests, uncomment this file along with the
-// example resource in lib/eks-capstone-cluster-infra-stack.ts
+// example resource in lib/eks-capstone-cluster.ts
 test('SQS Queue Created', () => {
 //   const app = new cdk.App();
 //     // WHEN
