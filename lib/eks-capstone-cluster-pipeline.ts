@@ -76,8 +76,8 @@ export default class EksCapstoneClusterPipeline extends Construct {
                 kubeProxyAddOn,
                 coreDnsAddOn,
                 vpcCniAddOn,
-                karpenterAddOn,
-                calicoAddOn,
+                //karpenterAddOn,
+                //calicoAddOn,
                 metricsServerAddOn)
             .teams();
 
