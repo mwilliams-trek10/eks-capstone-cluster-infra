@@ -90,8 +90,16 @@ export default class EksCapstoneClusterPipeline extends Construct {
          ***********/
         const devArgoCd: ArgoCDAddOn = getArgoCdAddOnStage(argoCdRepo, 'env/Development');
 
-        const devNodeGroup: ManagedNodeGroup = {
+        const devBackendNodeGroup: ManagedNodeGroup = {
             id: 'backendManagedNodeGroup',
+            desiredSize: 1,
+            maxSize: 2,
+            minSize: 1,
+            instanceTypes: [new InstanceType('t4g.small')]
+        }
+
+        const devFrontendNodeGroup: ManagedNodeGroup = {
+            id: 'frontendManagedNodeGroup',
             desiredSize: 1,
             maxSize: 2,
             minSize: 1,
@@ -108,8 +116,9 @@ export default class EksCapstoneClusterPipeline extends Construct {
         // const devBackendClusterProvider: ClusterProvider = new blueprints.MngClusterProvider(devMngClusterProviderProps)
 
         const devGenericClusterProvider: GenericClusterProvider = new blueprints.ClusterBuilder()
-            .withCommonOptions(devMngClusterProviderProps)
-            .managedNodeGroup(devNodeGroup)
+            //.withCommonOptions(devMngClusterProviderProps)
+            .managedNodeGroup(devBackendNodeGroup)
+            .managedNodeGroup(devFrontendNodeGroup)
             .build()
 
         const devStageStackBuilder = blueprint
