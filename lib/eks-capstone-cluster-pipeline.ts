@@ -43,8 +43,7 @@ export default class EksCapstoneClusterPipeline extends Construct {
         const awsLoadBalancerControllerProps: AwsLoadBalancerControllerProps = {
             createIngressClassResource: true,
             enableWaf: false,
-            ingressClass: 'alb',
-            version: 'v2.4.1'
+            ingressClass: 'alb'
         };
         const awsLoadBalancerControllerAddOn: AwsLoadBalancerControllerAddOn = new AwsLoadBalancerControllerAddOn(awsLoadBalancerControllerProps);
 
@@ -77,7 +76,7 @@ export default class EksCapstoneClusterPipeline extends Construct {
                 kubeProxyAddOn,
                 coreDnsAddOn,
                 vpcCniAddOn,
-                //karpenterAddOn,
+                karpenterAddOn,
                 calicoAddOn,
                 metricsServerAddOn)
             .teams();
