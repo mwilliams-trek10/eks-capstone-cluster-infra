@@ -42,7 +42,9 @@ export default class EksCapstoneClusterPipeline extends Construct {
         const awsLoadBalancerControllerProps: AwsLoadBalancerControllerProps = {
             createIngressClassResource: true,
             enableWaf: false,
-            ingressClass: 'alb'
+            ingressClass: 'alb',
+            chart: '1.4.1',
+            version: 'v2.4.1'
         };
         const awsLoadBalancerControllerAddOn: AwsLoadBalancerControllerAddOn = new AwsLoadBalancerControllerAddOn(awsLoadBalancerControllerProps);
 
@@ -70,11 +72,12 @@ export default class EksCapstoneClusterPipeline extends Construct {
             .builder()
             .account(account)
             .region(region)
-            .addOns(awsLoadBalancerControllerAddOn,
+            .addOns(
+                awsLoadBalancerControllerAddOn,
                 kubeProxyAddOn,
                 coreDnsAddOn,
                 vpcCniAddOn,
-                karpenterAddOn,
+                //karpenterAddOn,
                 calicoAddOn,
                 metricsServerAddOn)
             .teams();
@@ -121,7 +124,7 @@ export default class EksCapstoneClusterPipeline extends Construct {
             desiredSize: 1,
             maxSize: 2,
             minSize: 1,
-            instanceTypes: [new InstanceType('t4g.small')],
+            instanceTypes: [new InstanceType('t4g.medium')],
             version: KubernetesVersion.V1_21
         }
         const stagingBackendClusterProvider: ClusterProvider = new blueprints.MngClusterProvider(stagingMngClusterProviderProps)
