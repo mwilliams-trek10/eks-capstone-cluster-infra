@@ -2,7 +2,7 @@ import { Construct } from 'constructs';
 import * as blueprints from '@aws-quickstart/eks-blueprints';
 import {
     ApplicationRepository,
-    ArgoCDAddOn, AwsLoadBalancerControllerAddOn, CalicoAddOn, ClusterProvider,
+    ArgoCDAddOn, AwsLoadBalancerControllerAddOn, CalicoAddOn, ClusterBuilder, ClusterProvider,
     CoreDnsAddOn, EksBlueprintProps,
     KarpenterAddOn,
     KubeProxyAddOn, MetricsServerAddOn, MngClusterProviderProps,
@@ -17,6 +17,7 @@ import {ManagedNodeGroup} from "@aws-quickstart/eks-blueprints/dist/cluster-prov
 import {INSTANCE_TYPES} from "aws-cdk-lib/aws-eks/lib/instance-types";
 import {InstanceType} from "aws-cdk-lib/aws-ec2";
 import {KubernetesVersion} from "aws-cdk-lib/aws-eks";
+import {GenericClusterProvider} from "@aws-quickstart/eks-blueprints/dist/cluster-providers/generic-cluster-provider";
 
 export default class EksCapstoneClusterPipeline extends Construct {
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -89,26 +90,33 @@ export default class EksCapstoneClusterPipeline extends Construct {
          * Development Stage
          ***********/
         const devArgoCd: ArgoCDAddOn = getArgoCdAddOnStage(argoCdRepo, 'env/Development');
+
+        const devNodeGroup: ManagedNodeGroup = {
+            id: 'backendManagedNodeGroup',
+            desiredSize: 1,
+            maxSize: 2,
+            minSize: 1,
+            instanceTypes: [new InstanceType('t4g.small')]
+        }
+
         const devMngClusterProviderProps: MngClusterProviderProps = {
             desiredSize: 1,
             maxSize: 2,
             minSize: 1,
-            instanceTypes: [new InstanceType('t4g.medium')],
+            instanceTypes: [new InstanceType('t4g.small')],
             version: KubernetesVersion.V1_21
         }
-        const devBackendClusterProvider: ClusterProvider = new blueprints.MngClusterProvider(devMngClusterProviderProps)
+        // const devBackendClusterProvider: ClusterProvider = new blueprints.MngClusterProvider(devMngClusterProviderProps)
 
-        // const devBackendClusterProvider = new blueprints.GenericClusterProvider(({
-        //     version: KubernetesVersion.V1_21,
-        //     managedNodeGroups: [
-        //
-        //     ]
-        // }))
+        const devGenericClusterProvider: GenericClusterProvider = new blueprints.ClusterBuilder()
+            .withCommonOptions(devMngClusterProviderProps)
+            .managedNodeGroup(devNodeGroup)
+            .build()
 
         const devStageStackBuilder = blueprint
             .clone(region, account)
             .addOns(devArgoCd)
-            .clusterProvider(devBackendClusterProvider);
+            .clusterProvider(devGenericClusterProvider);
 
         const devStage: StackStage = {
             id: 'development',
