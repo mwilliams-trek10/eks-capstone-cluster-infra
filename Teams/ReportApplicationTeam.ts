@@ -6,7 +6,7 @@ export default class ReportApplicationTeam extends ApplicationTeam {
         super({
             name: name,
             userRoleArn: `arn:aws:iam::${accountID}:role/report_application_team`,
-            // namespace: 'reporting'
+            namespace: 'reporting'
         });
     }
 }

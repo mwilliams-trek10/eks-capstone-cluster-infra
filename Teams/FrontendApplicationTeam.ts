@@ -6,7 +6,7 @@ export default class FrontendApplicationTeam extends ApplicationTeam {
         super({
             name: name,
             userRoleArn: `arn:aws:iam::${accountID}:role/frontend_application_team`,
-            // namespace: 'frontend'
+            namespace: 'frontend'
         });
     }
 }

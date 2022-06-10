@@ -60,8 +60,8 @@ export default class EksCapstoneClusterPipeline extends Construct {
         // Karpenter:
         const karpenterAddOn: KarpenterAddOn = new blueprints.KarpenterAddOn({
             provisionerSpecs: {
-                "node.kubernetes.io/instance-type": ['t3.micro'],
-                "kubernetes.io/arch": ['x86-64'],
+                "node.kubernetes.io/instance-type": ['t4g.micro'],
+                "kubernetes.io/arch": ['arm64'],
                 "karpenter.sh/capacity-type": ['spot']
             }
         });
@@ -79,7 +79,7 @@ export default class EksCapstoneClusterPipeline extends Construct {
                 //karpenterAddOn,
                 //calicoAddOn,
                 metricsServerAddOn)
-            .teams();
+            .teams(...teams);
 
         /******************************
          Stages
