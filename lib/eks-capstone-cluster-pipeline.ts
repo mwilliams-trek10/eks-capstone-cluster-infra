@@ -3,7 +3,7 @@ import * as blueprints from '@aws-quickstart/eks-blueprints';
 import {
     ApplicationRepository,
     ArgoCDAddOn, AwsLoadBalancerControllerAddOn, CalicoAddOn, ClusterBuilder, ClusterProvider,
-    CoreDnsAddOn, EksBlueprintProps,
+    CoreDnsAddOn, EksBlueprintProps, GitRepositoryReference,
     KarpenterAddOn,
     KubeProxyAddOn, MetricsServerAddOn, MngClusterProviderProps,
     StackStage, Team,
@@ -24,8 +24,10 @@ export default class EksCapstoneClusterPipeline extends Construct {
         super(scope, id);
 
         // ArgoCD Workloads Repo URL:
-        const argoCdRepo: ApplicationRepository = {
-            repoUrl: 'https://github.com/mwilliams-trek10/eks-capstone-workloads.git',
+        const argoCdRepo: GitHubSourceRepository = {
+            credentialsSecretName: "github-token",
+            repoUrl: "eks-capstone-workloads",
+            targetRevision: "main"
         }
 
         // Extract values from the props parameter.
@@ -43,7 +45,7 @@ export default class EksCapstoneClusterPipeline extends Construct {
         const awsLoadBalancerControllerProps: AwsLoadBalancerControllerProps = {
             createIngressClassResource: true,
             enableWaf: false,
-            ingressClass: 'alb'
+            ingressClass: 'capstone-frontend-alb-ingress'
         };
         const awsLoadBalancerControllerAddOn: AwsLoadBalancerControllerAddOn = new AwsLoadBalancerControllerAddOn(awsLoadBalancerControllerProps);
 
