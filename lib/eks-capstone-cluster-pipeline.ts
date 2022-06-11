@@ -74,7 +74,7 @@ export default class EksCapstoneClusterPipeline extends Construct {
             .account(account)
             .region(region)
             .addOns(
-                awsLoadBalancerControllerAddOn,
+                //awsLoadBalancerControllerAddOn,
                 kubeProxyAddOn,
                 coreDnsAddOn,
                 vpcCniAddOn,
@@ -125,7 +125,7 @@ export default class EksCapstoneClusterPipeline extends Construct {
 
         const devStageStackBuilder = blueprint
             .clone(region, account)
-            .addOns(devArgoCd)
+            //.addOns(devArgoCd)
             .clusterProvider(devGenericClusterProvider);
 
         const devStage: StackStage = {
